@@ -1,0 +1,50 @@
+.plates-container {
+  --field-border: 2px solid #ccc;
+
+  .plate {
+    display: flex;
+    height: 70px;
+    margin-block: 1rem;
+    border: var(--field-border);
+    border-radius: 8px;
+    overflow: hidden;
+
+    &-input-field {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: 1fr 48px;
+    }
+
+    &-country {
+      align-content: center;
+      padding-inline: 8px;
+      font-size: 1.75rem;
+      font-weight: 700;
+      background-color: #003399;
+      color: white;
+    }
+
+    &-number {
+      flex-grow: 1;
+      align-content: center;
+      padding-inline: 16px;
+      font-size: 2.75rem;
+      font-weight: 900;
+      text-align: center;
+    }
+  }
+
+  fieldset {
+    border-radius: 8px;
+    border: var(--field-border);
+    margin: 0;
+  }
+
+  legend {
+    font-size: 0.925rem;
+  }
+
+  button {
+    margin-block-start: 4px;
+  }
+}

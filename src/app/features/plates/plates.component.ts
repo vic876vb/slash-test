@@ -1,13 +1,18 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { ALPHABETIC_BASE, cumulativeThreshold, getThreshold, LETTERS, NUMERIC_BASE, PLATE_DIGITS, THRESHOLDS } from './plates.constants'
+import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon'
+import { MatInputModule } from '@angular/material/input'
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-plates',
   standalone: true,
+  imports: [MatButtonModule, MatIconModule, MatInputModule, ReactiveFormsModule],
   templateUrl: './plates.component.html',
   styleUrls: ['./plates.component.scss']
 })
-export class PlatesComponent implements OnInit {
+export class PlatesComponent {
   // from `000000` to `999999`
   threshold1 = NUMERIC_BASE ** PLATE_DIGITS
   // from `00000A` to `99999Z`
@@ -23,19 +28,17 @@ export class PlatesComponent implements OnInit {
   // from `AAAAAA` to `ZZZZZZ`
   threshold7 = ALPHABETIC_BASE ** PLATE_DIGITS
 
+  licensePlateControl: FormControl<string> = new FormControl(null, [Validators.required, Validators.pattern(/\d/)]);
+  licensePlate: string
+
   constructor() { }
 
-  ngOnInit() {
-    // const number = 501363136
-    const number = 12231243
-
-    console.time('getLicense')
-    const lic = this.getLicense(number)
-    console.log('lic', lic)
-    console.timeEnd('getLicense')
+  public setLicensePlate(): void {
+    this.licensePlate = this.getLicensePlate(Number(this.licensePlateControl.value))
   }
 
-  getLicense(number: number): string {
+  private getLicensePlate(number: number): string {
+    if (isNaN(number)) return null
     if (!this.isInRange(number)) throw new Error('License plate out of range')
     if (number <= this.threshold1) return this.formatNumeric(number - 1, PLATE_DIGITS) //String(number - 1).padStart(PLATE_DIGITS, '0')
 
@@ -135,47 +138,5 @@ export class PlatesComponent implements OnInit {
 
   private isInRange(number: number): boolean {
     return number > 0 && number <= (this.threshold1 + this.threshold2 + this.threshold3 + this.threshold4 + this.threshold5 + this.threshold6 + this.threshold7)
-  }
-
-  *generateThresholds() {
-    const digits = 6
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
-    const alphabet = letters.length
-    let digitCount = digits
-    let letterCount = 0
-
-    for (let i = 0; i < digits + 1; i++) {
-      yield alphabet ** letterCount * 10 ** digitCount
-      digitCount--
-      letterCount++
-    }
-
-
-    // // from `000000` to `999999`
-    // yield alphabet ** letterCount * 10 ** digitCount
-    // digitCount--
-    // letterCount++
-    // // from `00000A` to `99999Z`
-    // yield alphabet ** letterCount * 10 ** digitCount
-    // digitCount--
-    // letterCount++
-    // // from `0000AA` to `9999ZZ`
-    // yield alphabet ** letterCount * 10 ** digitCount
-    // digitCount--
-    // letterCount++
-    // // from `000AAA` to `999ZZZ`
-    // yield alphabet ** letterCount * 10 ** digitCount
-    // digitCount--
-    // letterCount++
-    // // from `00AAAA` to `99ZZZZ`
-    // yield alphabet ** letterCount * 10 ** digitCount
-    // digitCount--
-    // letterCount++
-    // // from `0AAAAA` to `9ZZZZZ`
-    // yield alphabet ** letterCount * 10 ** digitCount
-    // digitCount--
-    // letterCount++
-    // // from `AAAAAA` to `ZZZZZZ`
-    // yield alphabet ** letterCount * 10 ** digitCount
   }
 }
