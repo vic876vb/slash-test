@@ -2,3 +2,60 @@
 fetch each URL, not requesting more than MAX_CONCURRENCY URLs at the same time. The URLs should be
 fetched as soon as possible. The function should return an array of responses for each URL.
 How would you write a test for such a function? -->
+<div class="queued-requests">
+  <mat-accordion>
+    <mat-expansion-panel [disabled]="(activeRequests | async).length === 0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Active requests</mat-panel-title>
+        @if (activeRequests | async; as activeRequests) {
+        <mat-panel-description [ngPlural]="activeRequests.length">
+          <ng-template ngPluralCase="=0">There are no active requests</ng-template>
+          <ng-template ngPluralCase="one">There is 1 active request</ng-template>
+          <ng-template ngPluralCase="other">
+            There are {{ activeRequests.length }} active requests
+          </ng-template>
+        </mat-panel-description>
+        }
+      </mat-expansion-panel-header>
+      @if (activeRequests | async; as activeRequests) {
+      <ul>
+        @for (request of activeRequests; track $index) {
+        <li>{{request}}</li>
+        }
+      </ul>
+      }
+    </mat-expansion-panel>
+    <mat-expansion-panel [disabled]="(queuedRequests | async).length === 0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Queued requests</mat-panel-title>
+        @if (queuedRequests | async; as queuedRequests) {
+        <mat-panel-description [ngPlural]="queuedRequests.length">
+          <ng-template ngPluralCase="=0">There are no queued requests</ng-template>
+          <ng-template ngPluralCase="one">There is 1 queued request</ng-template>
+          <ng-template ngPluralCase="other">
+            There are {{ queuedRequests.length }} queued requests
+          </ng-template>
+        </mat-panel-description>
+        } </mat-expansion-panel-header>
+      @if (queuedRequests | async; as queuedRequests) {
+      <ul>
+        @for (request of queuedRequests; track $index) {
+        <li>{{request}}</li>
+        }
+      </ul>
+      }
+    </mat-expansion-panel>
+    <mat-card class="completed-card">
+      <mat-card-header>
+        <mat-card-title>Completed</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @if (responses | async; as responses) {
+        @for (response of responses; track response.index) {
+        <pre>{{response.index}} {{response.request}}</pre>
+        }
+        }
+      </mat-card-content>
+    </mat-card>
+  </mat-accordion>
+</div>
