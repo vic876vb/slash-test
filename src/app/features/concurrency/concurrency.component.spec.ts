@@ -1,29 +1,22 @@
-/* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing'
-import { By } from '@angular/platform-browser'
-import { DebugElement } from '@angular/core'
-
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
 import { ConcurrencyComponent } from './concurrency.component'
-import { MAX_CONCURRENCY } from './concurrency.constants'
 import { HttpClient } from '@angular/common/http'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { of } from 'rxjs'
+import { delay, finalize, of } from 'rxjs'
+import { AppTestingModule } from '../../testing/app-testing.module'
 
 describe('ConcurrencyComponent', () => {
   let component: ConcurrencyComponent
   let fixture: ComponentFixture<ConcurrencyComponent>
   let httpClientSpy: jasmine.SpyObj<HttpClient>
 
-
-  beforeEach(async(() => {
-    let httpClientSpyObj = jasmine.createSpyObj('HttpClient', ['get'])
+  beforeEach(async () => {
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get'])
 
     TestBed.configureTestingModule({
-      declarations: [ConcurrencyComponent],
-      imports: [HttpClientTestingModule],
-      providers: [{ provide: HttpClient, useValue: httpClientSpyObj }]
+      imports: [AppTestingModule, ConcurrencyComponent],
+      providers: [{ provide: HttpClient, useValue: httpClientSpy }]
     }).compileComponents()
-  }))
+  })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ConcurrencyComponent)
@@ -35,15 +28,25 @@ describe('ConcurrencyComponent', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should fetch only few requests at a time', () => {
-    // expect(component).toBeTruthy()
-  })
+  it('should fetch only few requests at a time', fakeAsync(() => {
+    const urls = ['url1', 'url2', 'url3', 'url4', 'url5']
+    const maxConcurrency = 2
+    let activeRequests = 0
+    let maxConcurrent = 0
 
-  // it('should queue requests', () => {
-  //   const urls = ['url1', 'url2', 'url3', 'url4', 'url5']
-  //   const { activeRequests } = component
+    httpClientSpy.get.and.callFake(() => {
+      activeRequests++
+      maxConcurrent = Math.max(activeRequests, maxConcurrent)
 
-  //   // fetch()
-  //   expect(activeRequests.length).toBeLessThanOrEqual(MAX_CONCURRENCY)
-  // })
+      return of().pipe(
+        delay(100),
+        finalize(() => activeRequests--)
+      )
+    })
+
+    component.fetchUrls(urls, maxConcurrency).subscribe()
+    tick()
+
+    expect(maxConcurrent).toBeLessThanOrEqual(maxConcurrency)
+  }))
 })

@@ -1,28 +1,25 @@
-/* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
-import { PlatesComponent } from './plates.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { PlatesComponent } from './plates.component'
+import { AppTestingModule } from '../../testing/app-testing.module'
 
 describe('PlatesComponent', () => {
-  let component: PlatesComponent;
-  let fixture: ComponentFixture<PlatesComponent>;
+  let component: PlatesComponent
+  let fixture: ComponentFixture<PlatesComponent>
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     TestBed.configureTestingModule({
-      declarations: [ PlatesComponent ]
+      imports: [AppTestingModule, PlatesComponent]
     })
-    .compileComponents();
-  }));
+      .compileComponents()
+  })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PlatesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(PlatesComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})
