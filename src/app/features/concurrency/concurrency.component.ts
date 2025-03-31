@@ -25,14 +25,14 @@ export class ConcurrencyComponent implements OnInit {
       'https://countriesnow.space/api/v0.1/countries/population',
       'https://countriesnow.space/api/v0.1/countries/positions',
       'https://countriesnow.space/api/v0.1/countries/flag/unicode',
-      // 'https://countriesnow.space/api/v0.1/countries/flag/images',
-      // 'https://countriesnow.space/api/v0.1/countries/currency',
-      // 'https://countriesnow.space/api/v0.1/countries/capital',
-      // 'https://countriesnow.space/api/v0.1/countries',
-      // 'https://countriesnow.space/api/v0.1/countries/iso',
-      // 'https://countriesnow.space/api/v0.1/countries/codes',
-      // 'https://countriesnow.space/api/v0.1/countries/info?returns=currency,flag,unicodeFlag,dialCode',
-      // 'https://countriesnow.space/api/v0.1/countries/states',
+      'https://countriesnow.space/api/v0.1/countries/flag/images',
+      'https://countriesnow.space/api/v0.1/countries/currency',
+      'https://countriesnow.space/api/v0.1/countries/capital',
+      'https://countriesnow.space/api/v0.1/countries',
+      'https://countriesnow.space/api/v0.1/countries/iso',
+      'https://countriesnow.space/api/v0.1/countries/codes',
+      'https://countriesnow.space/api/v0.1/countries/info?returns=currency,flag,unicodeFlag,dialCode',
+      'https://countriesnow.space/api/v0.1/countries/states',
     ]
 
     this.fetchUrls(urls, MAX_CONCURRENCY).subscribe()

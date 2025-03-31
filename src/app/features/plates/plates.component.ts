@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { ALPHABETIC_BASE, cumulativeThreshold, getThreshold, LETTERS, NUMERIC_BASE, PLATE_DIGITS, THRESHOLDS } from './plates.constants'
+import { ALPHABETIC_BASE, cumulativeThreshold, getThreshold, LETTERS, NUMERIC_BASE, PLATE_DIGITS } from './plates.constants'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
@@ -55,66 +55,6 @@ export class PlatesComponent {
       if (number <= range.threshold) return this.calculateParts(number - (range.threshold - getThreshold(range.digits, range.letters)), range.digits, range.letters)
     }
 
-    // if (number <= (this.threshold1 + this.threshold2)) {
-    //   const numericRange = 10 ** (PLATE_DIGITS - 1)
-    //   const diff = number - this.threshold1
-    //   const numericPart = Math.floor((diff - 1) % numericRange)
-    //   const letterPart = LETTERS[Math.floor((diff - 1) / numericRange)]
-    //   return String(numericPart).padStart(PLATE_DIGITS - 1, '0') + letterPart
-    // }
-    // if (number <= (this.threshold1 + this.threshold2 + this.threshold3)) {
-    //   const numericRange = 10 ** (PLATE_DIGITS - 2)
-    //   const diff = number - (this.threshold1 + this.threshold2)
-    //   const numericPart = Math.floor((diff - 1) % numericRange)
-    //   const letterIndex = Math.floor((diff - 1) / numericRange)
-    //   const firstLetter = LETTERS[letterIndex / ALPHABETIC_BASE]
-    //   const secondLetter = LETTERS[letterIndex % ALPHABETIC_BASE]
-    //   return String(numericPart).padStart(PLATE_DIGITS - 2, '0') + firstLetter + secondLetter
-    // }
-    // if (number <= (this.threshold1 + this.threshold2 + this.threshold3 + this.threshold4)) {
-    //   const numericRange = 10 ** (PLATE_DIGITS - 3)
-    //   const diff = number - (this.threshold1 + this.threshold2 + this.threshold3)
-    //   const numericPart = Math.floor((diff - 1) % numericRange)
-    //   const letterIndex = Math.floor((diff - 1) / numericRange)
-    //   const firstLetter = LETTERS[Math.floor(letterIndex / (ALPHABETIC_BASE ** 2))]
-    //   const secondLetter = LETTERS[Math.floor((letterIndex % (ALPHABETIC_BASE ** 2)) / ALPHABETIC_BASE)]
-    //   const thirdLetter = LETTERS[letterIndex % ALPHABETIC_BASE]
-    //   return String(numericPart).padStart(PLATE_DIGITS - 3, '0') + firstLetter + secondLetter + thirdLetter
-    // }
-    // if (number <= this.threshold1 + this.threshold2 + this.threshold3 + this.threshold4 + this.threshold5) {
-    //   const numericRange = 10 ** (PLATE_DIGITS - 4)
-    //   const diff = number - (this.threshold1 + this.threshold2 + this.threshold3 + this.threshold4)
-    //   const numericPart = Math.floor((diff - 1) % numericRange)
-    //   const letterIndex = Math.floor((diff - 1) / numericRange)
-    //   const firstLetter = LETTERS[Math.floor(letterIndex / (ALPHABETIC_BASE ** 3))]
-    //   const secondLetter = LETTERS[Math.floor((letterIndex % (ALPHABETIC_BASE ** 3)) / (ALPHABETIC_BASE ** 2))]
-    //   const thirdLetter = LETTERS[Math.floor((letterIndex % (ALPHABETIC_BASE ** 2)) / ALPHABETIC_BASE)]
-    //   const fourthLetter = LETTERS[letterIndex % ALPHABETIC_BASE]
-    //   return String(numericPart).padStart(PLATE_DIGITS - 4, '0') + firstLetter + secondLetter + thirdLetter + fourthLetter
-    // }
-    // if (number <= this.threshold1 + this.threshold2 + this.threshold3 + this.threshold4 + this.threshold5 + this.threshold6) {
-    //   const numericRange = 10 ** (PLATE_DIGITS - 5)
-    //   const diff = number - (this.threshold1 + this.threshold2 + this.threshold3 + this.threshold4 + this.threshold5)
-    //   const numericPart = Math.floor((diff - 1) % numericRange)
-    //   const letterIndex = Math.floor((diff - 1) / numericRange)
-    //   const firstLetter = LETTERS[Math.floor(letterIndex / (ALPHABETIC_BASE ** 4))]
-    //   const secondLetter = LETTERS[Math.floor((letterIndex % (ALPHABETIC_BASE ** 4)) / (ALPHABETIC_BASE ** 3))]
-    //   const thirdLetter = LETTERS[Math.floor((letterIndex % (ALPHABETIC_BASE ** 3)) / (ALPHABETIC_BASE ** 2))]
-    //   const fourthLetter = LETTERS[Math.floor((letterIndex % (ALPHABETIC_BASE ** 2)) / ALPHABETIC_BASE)]
-    //   const fifthLetter = LETTERS[letterIndex % ALPHABETIC_BASE]
-    //   return String(numericPart).padStart(PLATE_DIGITS - 5, '0') + firstLetter + secondLetter + thirdLetter + fourthLetter + fifthLetter
-    // }
-    // if (number <= this.threshold1 + this.threshold2 + this.threshold3 + this.threshold4 + this.threshold5 + this.threshold6 + this.threshold7) {
-    //   const diff = number - (this.threshold1 + this.threshold2 + this.threshold3 + this.threshold4 + this.threshold5 + this.threshold6)
-    //   const letterIndex = Math.floor(diff - 1)
-    //   const firstLetter = LETTERS[Math.floor(letterIndex / (ALPHABETIC_BASE ** 5))]
-    //   const secondLetter = LETTERS[Math.floor((letterIndex % (ALPHABETIC_BASE ** 5)) / (ALPHABETIC_BASE ** 4))]
-    //   const thirdLetter = LETTERS[Math.floor((letterIndex % (ALPHABETIC_BASE ** 4)) / (ALPHABETIC_BASE ** 3))]
-    //   const fourthLetter = LETTERS[Math.floor((letterIndex % (ALPHABETIC_BASE ** 3)) / (ALPHABETIC_BASE ** 2))]
-    //   const fifthLetter = LETTERS[Math.floor((letterIndex % (ALPHABETIC_BASE ** 2)) / ALPHABETIC_BASE)]
-    //   const sixthLetter = LETTERS[letterIndex % ALPHABETIC_BASE]
-    //   return firstLetter + secondLetter + thirdLetter + fourthLetter + fifthLetter + sixthLetter
-    // }
     return null
   }
 
